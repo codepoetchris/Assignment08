@@ -10,28 +10,30 @@
     }
 
     Truck.prototype.createOrder = function (order) {
-        // console.log('Adding order for ' + order.emailAddress);
+        console.log('Adding order for ' + order.emailAddress);
         order.id = order.emailAddress;
-        this.db.add(order.emailAddress, order);
-        return 'Adding order for ' + order.emailAddress;
+        return this.db.add(order.emailAddress, order);
     };
 
     Truck.prototype.deliverOrder = function (customerId) {
-        // console.log('Delivering order for ' + customerId);
-        this.db.remove(customerId);
-        return 'Delivering order for ' + customerId;
+        console.log('Delivering order for ' + customerId);
+        return this.db.remove(customerId);
     };
 
-    Truck.prototype.printOrders = function () {
-        var customerIdArray = Object.keys(this.db.getAll());
-        console.log('Truck #' + this.truckId + ' has pending orders:');
-        var returnValues = [];
-        var i = 0;
-        customerIdArray.forEach(function (id) {
-            console.log(this.db.get(id));
-            returnValues[i++] = this.db.get(id);
-        }.bind(this));
-        return returnValues;
+    Truck.prototype.printOrders = function (printFn) {
+        return this.db.getAll()
+            .then(function (orders) {
+                var customerIdArray = Object.keys(orders);
+
+                console.log('Truck #' + this.truckId + ' has pending orders:');
+
+                customerIdArray.forEach(function (id) {
+                    console.log(orders[id]);
+                    if (printFn) {
+                        printFn(orders[id]);
+                    }
+                }.bind(this));
+            }.bind(this));
     };
 
     App.Truck = Truck;
