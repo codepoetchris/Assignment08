@@ -25,4 +25,10 @@
     });
 
     formHandler.addInputHandler(Validation.isCompanyEmail);
+
+    //The only issue with this is that it won't currently work with the
+    //old offline DataStore.  The get method would need to be modified
+    //to support a callback function that returns the the item if it exits.
+    formHandler.addOrderExistsHandler(Validation.doesOrderExist.bind(remoteDS));
+
 })(window);
