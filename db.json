@@ -7,6 +7,14 @@
       "flavor": "",
       "strength": "30",
       "id": "test@bignerdranch.com"
+    },
+    {
+      "coffee": "asDf",
+      "emailAddress": "ad@bignerdranch.com",
+      "size": "tall",
+      "flavor": "",
+      "strength": "30",
+      "id": "ad@bignerdranch.com"
     }
   ]
 }
