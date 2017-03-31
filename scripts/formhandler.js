@@ -45,7 +45,24 @@
                 message = emailAddress + ' is not an authorized email address!';
                 event.target.setCustomValidity(message);
             }
+        });
+    };
 
+    //In reality I would probably combine this method with the addInputHandler
+    //method above and just pass in the customValidity message.
+    FormHandler.prototype.addOrderExistsHandler = function (fn) {
+        console.log('Setting order exists handler for form');
+        this.$formElement.on('input', '[name="emailAddress"]', function (event) {
+            var emailAddress = event.target.value;
+            var message = '';
+            fn(emailAddress, function (orderExists) {
+                if(orderExists) {
+                    message = emailAddress + ' already has an order in place.';
+                    event.target.setCustomValidity(message);
+                } else {
+                    event.target.setCustomValidity('');
+                }
+            });
         });
     };
 
